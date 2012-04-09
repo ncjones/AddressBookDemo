@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+	This file is part of AddressBookDemo.
+	
+	AddressBookDemo is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	AddressBookDemo is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with AddressBookDemo.  If not, see <http://www.gnu.org/licenses/>.
+
+	-->
+<project name="AddressBookDemoJava" default="build">
+
+	<target name="build" depends="clean,jar" description="Build all artifacts.">
+	</target>
+	
+	<target name="jar" depends="compile">
+		<jar destfile="build/${ant.project.name}.jar">
+			<fileset dir="build/main/java"/>
+			<manifest>
+			      <attribute name="Main-Class" value="com.ncjones.addrbook.AddressBookApplication"/>
+			    </manifest>
+		</jar>
+	</target>
+	
+	<target name="compile">
+		<mkdir dir="build/main/java"/>
+		<javac srcdir="src/main/java" destdir="build/main/java"></javac>
+	</target>
+
+	<target name="clean" description="Remove all generated artifacts.">
+			<delete dir="build"/>
+	</target>
+
+</project>
