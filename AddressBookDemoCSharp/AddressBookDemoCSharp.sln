@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBookDemoCSharp", "AddressBookDemoCSharp.csproj", "{A86406FD-EC52-41DC-97F5-EAC1C9E55107}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A86406FD-EC52-41DC-97F5-EAC1C9E55107}.Debug|x86.ActiveCfg = Debug|x86
+		{A86406FD-EC52-41DC-97F5-EAC1C9E55107}.Debug|x86.Build.0 = Debug|x86
+		{A86406FD-EC52-41DC-97F5-EAC1C9E55107}.Release|x86.ActiveCfg = Release|x86
+		{A86406FD-EC52-41DC-97F5-EAC1C9E55107}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = AddressBookDemoCSharp.csproj
+	EndGlobalSection
+EndGlobal
