@@ -60,14 +60,7 @@
     <Reference Include="Mono.Posix" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="gtk-gui\gui.stetic">
-      <LogicalName>gui.stetic</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="MainWindow.cs" />
-    <Compile Include="gtk-gui\MainWindow.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
