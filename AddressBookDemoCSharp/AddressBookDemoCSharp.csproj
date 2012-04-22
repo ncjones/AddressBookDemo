@@ -49,6 +49,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Contact.cs" />
     <Compile Include="ContactService.cs" />
+    <Compile Include="InMemoryContactService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
