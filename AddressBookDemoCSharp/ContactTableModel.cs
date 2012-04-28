@@ -17,32 +17,32 @@
 //  along with AddressBookDemo.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
-using Gtk;
+using System.Collections.Generic;
 
 namespace AddressBookDemoCSharp
 {
-	class MainClass
+	public class ContactTableModel : TableModel<Contact>
 	{
+		private ContactService contactService;
 		
-		public static void Main(string[] args)
+		public ContactTableModel(ContactService contactService)
 		{
-			var contactService = new InMemoryContactService();
-			contactService.saveContact(CreateContact("Test One", "1234567", "test1@example.com"));
-			contactService.saveContact(CreateContact("Test Two", "7654321", "test2@example.com"));
-			Application.Init();
-			MainWindow win = new MainWindow(contactService);
-			win.Show();
-			Application.Run();
+			this.contactService = contactService;
 		}
 		
-		static Contact CreateContact(string name, string phone, string email)
+		public System.Collections.Generic.List<Contact> GetRowData ()
 		{
-			var contact = new Contact();
-			contact.Name = name;
-			contact.Phone = phone;
-			contact.Email = email;
-			return contact;
+			return this.contactService.getAllContacts();
 		}
-		
+
+		public System.Collections.Generic.List<TableColumn<Contact>> GetTableColumns ()
+		{
+			var columns = new List<TableColumn<Contact>>();
+			columns.Add(new TableColumn<Contact>("Name", c => c.Name));
+			columns.Add(new TableColumn<Contact>("Phone", c => c.Phone));
+			columns.Add(new TableColumn<Contact>("Email", c => c.Email));
+			return columns;
+		}
 	}
 }
+

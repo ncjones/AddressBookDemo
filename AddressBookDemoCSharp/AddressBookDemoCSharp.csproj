@@ -52,6 +52,7 @@
     <Compile Include="InMemoryContactService.cs" />
     <Compile Include="TableModel.cs" />
     <Compile Include="TableView.cs" />
+    <Compile Include="ContactTableModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

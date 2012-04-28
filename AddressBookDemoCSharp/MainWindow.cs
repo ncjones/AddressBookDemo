@@ -18,20 +18,19 @@
 // 
 using System;
 using Gtk;
+using AddressBookDemoCSharp;
+using System.Collections.Generic;
 
 public partial class MainWindow: Gtk.Window
-{	
-	public MainWindow (): base (Gtk.WindowType.Toplevel)
+{	 
+
+	public MainWindow (ContactService contactService): base (Gtk.WindowType.Toplevel)
 	{
+		this.SetSizeRequest(400, 300);
+		Gtk.TreeView tree = new TableView<Contact>(new ContactTableModel(contactService));
+		this.Add(tree);
+		this.ShowAll();
 		this.Name = "MainWindow";
-		this.Title = global::Mono.Unix.Catalog.GetString ("MainWindow");
-		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
-		if ((this.Child != null)) {
-			this.Child.ShowAll ();
-		}
-		this.DefaultWidth = 400;
-		this.DefaultHeight = 300;
-		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 	}
 	
@@ -40,4 +39,5 @@ public partial class MainWindow: Gtk.Window
 		Application.Quit ();
 		a.RetVal = true;
 	}
+
 }
