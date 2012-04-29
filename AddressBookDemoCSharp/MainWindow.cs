@@ -41,11 +41,19 @@ public partial class MainWindow: Gtk.Window
 		var box = new HBox(false, 0);
 		var editButton = new Button("Edit Contact");
 		editButton.Clicked += delegate(object sender, EventArgs e) {
-			var dialog = new EditContactDialog();
+			var dialog = new EditContactDialog(this.GetSelectedContact());
 			dialog.Show();
 		};
 		box.PackEnd(editButton, false, false, 0);
 		return box;
+	}
+	
+	private Contact GetSelectedContact() {
+		var contact = new Contact();
+		contact.Name = "Test";
+		contact.Email = "Test@Example.com";
+		contact.Phone = "123456";
+		return contact;
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)

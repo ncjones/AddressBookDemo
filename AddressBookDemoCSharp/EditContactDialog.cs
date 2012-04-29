@@ -22,13 +22,18 @@ namespace AddressBookDemoCSharp
 {
 	class EditContactDialog : Dialog
 	{
+		Contact contact;
+		
 		Entry nameEntry = new Entry();
+		
 		Entry phoneEntry = new Entry();
+		
 		Entry emailEntry = new Entry();
 
-		public EditContactDialog()
+		public EditContactDialog(Contact contact)
 		{
 			this.Title = "Edit Contact";
+			this.contact = contact;
 			this.InitDialogUI();
 		}
 		
@@ -48,14 +53,17 @@ namespace AddressBookDemoCSharp
 			var nameLabel = new Label("_Name");
 			table.Attach(nameLabel, 0, 1, 0, 1);
 			table.Attach(this.nameEntry, 1, 2, 0, 1);
+			this.nameEntry.Text = this.contact.Name;
 			nameLabel.MnemonicWidget = this.nameEntry;
 			var phoneLabel = new Label("_Phone");
 			table.Attach(phoneLabel, 0, 1, 1, 2);
 			table.Attach(this.phoneEntry, 1, 2, 1, 2);
+			this.phoneEntry.Text = this.contact.Phone;
 			phoneLabel.MnemonicWidget = this.phoneEntry;
 			var emailLabel = new Label("_Email");
 			table.Attach(emailLabel, 0, 1, 2, 3);
 			table.Attach(this.emailEntry, 1, 2, 2, 3);
+			this.emailEntry.Text = this.contact.Email;
 			emailLabel.MnemonicWidget = this.emailEntry;
 			this.VBox.PackStart(table, false, false, 0);
 			table.ShowAll();
