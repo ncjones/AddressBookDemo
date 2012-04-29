@@ -53,6 +53,7 @@
     <Compile Include="TableModel.cs" />
     <Compile Include="TableView.cs" />
     <Compile Include="ContactTableModel.cs" />
+    <Compile Include="EditContactDialog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -28,10 +28,24 @@ public partial class MainWindow: Gtk.Window
 	{
 		this.SetSizeRequest(400, 300);
 		Gtk.TreeView tree = new TableView<Contact>(new ContactTableModel(contactService));
-		this.Add(tree);
+		var vbox = new VBox();
+		vbox.PackStart(tree, true, true, 0);
+		vbox.PackStart(createActionButtonsContainer(), false, false, 5);
+		this.Add(vbox);
 		this.ShowAll();
 		this.Name = "MainWindow";
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+	}
+	
+	private Container createActionButtonsContainer() {
+		var box = new HBox(false, 0);
+		var editButton = new Button("Edit Contact");
+		editButton.Clicked += delegate(object sender, EventArgs e) {
+			var dialog = new EditContactDialog();
+			dialog.Show();
+		};
+		box.PackEnd(editButton, false, false, 0);
+		return box;
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
