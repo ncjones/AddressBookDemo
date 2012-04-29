@@ -31,6 +31,8 @@ namespace AddressBookDemoCSharp
 			this.contact = contact;
 		}
 		
+		public Contact Contact {get { return this.contact; } }
+		
 		[Gtk.TreeNodeValue (Column=0)]
         public string Name {get { return this.contact.Name; } }
 		

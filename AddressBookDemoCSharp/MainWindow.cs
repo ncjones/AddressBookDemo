@@ -25,17 +25,19 @@ using GLib;
 public partial class MainWindow: Gtk.Window
 {
 	private ContactService contactService;
+	
+	private NodeView contactTable;
 
 	public MainWindow (ContactService contactService): base (Gtk.WindowType.Toplevel)
 	{
 		this.contactService = contactService;
-		var contactTable = new NodeView(GetContactNodeStore());
+		this.contactTable = new NodeView(GetContactNodeStore());
         contactTable.AppendColumn("Name", new CellRendererText(), "text", 0);
         contactTable.AppendColumn("Phone", new CellRendererText(), "text", 1);
         contactTable.AppendColumn("Email", new CellRendererText(), "text", 2);
 		this.SetSizeRequest(400, 300);
 		var vbox = new VBox();
-		vbox.PackStart(contactTable, true, true, 0);
+		vbox.PackStart(this.contactTable, true, true, 0);
 		vbox.PackStart(createActionButtonsContainer(), false, false, 5);
 		this.Add(vbox);
 		this.ShowAll();
@@ -63,11 +65,8 @@ public partial class MainWindow: Gtk.Window
 	}
 	
 	private Contact GetSelectedContact() {
-		var contact = new Contact();
-		contact.Name = "Test";
-		contact.Email = "Test@Example.com";
-		contact.Phone = "123456";
-		return contact;
+		ContactTreeNode selectedNode = (ContactTreeNode) this.contactTable.NodeSelection.SelectedNode;
+		return selectedNode.Contact;
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
