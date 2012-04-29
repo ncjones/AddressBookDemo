@@ -50,10 +50,8 @@
     <Compile Include="Contact.cs" />
     <Compile Include="ContactService.cs" />
     <Compile Include="InMemoryContactService.cs" />
-    <Compile Include="TableModel.cs" />
-    <Compile Include="TableView.cs" />
-    <Compile Include="ContactTableModel.cs" />
     <Compile Include="EditContactDialog.cs" />
+    <Compile Include="ContactTreeNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

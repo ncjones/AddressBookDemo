@@ -17,39 +17,28 @@
 //  along with AddressBookDemo.  If not, see <http://www.gnu.org/licenses/>.
 // 
 using System;
-using System.Collections.Generic;
+using Gtk;
 
 namespace AddressBookDemoCSharp
 {
-	public interface TableModel<T>
+	[Gtk.TreeNode (ListOnly=true)]
+	public class ContactTreeNode : TreeNode
 	{
-
-		List<T> GetRowData();
+		private Contact contact;
 		
-		List<TableColumn<T>> GetTableColumns();
-		
-	}
-	
-	public delegate string ColumnValueDelegate<T>(T rowDatum);
-	
-	public class TableColumn<T> {
-			
-		private string title;
-		
-		private ColumnValueDelegate<T> columnValueDelegate;
-		
-		public TableColumn(string title, ColumnValueDelegate<T> columnValueDelegate) {
-			this.title = title;
-			this.columnValueDelegate = columnValueDelegate;
+		public ContactTreeNode(Contact contact)
+		{
+			this.contact = contact;
 		}
 		
-		public string Title { get { return this.title; } }
+		[Gtk.TreeNodeValue (Column=0)]
+        public string Name {get { return this.contact.Name; } }
 		
-		public string GetValue(T rowDatum) {
-			return columnValueDelegate(rowDatum);
-		}
+		[Gtk.TreeNodeValue (Column=1)]
+        public string Phone {get { return this.contact.Phone; } }
 		
+		[Gtk.TreeNodeValue (Column=2)]
+        public string Email {get { return this.contact.Email; } }
 	}
-	
 }
 
