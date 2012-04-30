@@ -22,7 +22,7 @@ using AddressBookDemoCSharp;
 using System.Collections.Generic;
 using GLib;
 
-public partial class MainWindow: Gtk.Window
+public class MainWindow: Gtk.Window
 {
 	private ContactService contactService;
 	
@@ -57,16 +57,32 @@ public partial class MainWindow: Gtk.Window
 		var box = new HBox(false, 0);
 		var editButton = new Button("Edit Contact");
 		editButton.Clicked += delegate(object sender, EventArgs e) {
-			var dialog = new EditContactDialog(this.GetSelectedContact());
+			var dialog = new EditContactDialog(this.GetSelectedContactNode().Contact);
+			dialog.Response += HandleDialogResponse;
 			dialog.Show();
 		};
 		box.PackEnd(editButton, false, false, 0);
 		return box;
 	}
+
+	void UpdateContact(Contact contact)
+	{
+		this.contactService.updateContact(contact);
+		this.GetSelectedContactNode().Contact = contact;
+	}
+
+	void HandleDialogResponse(object o, ResponseArgs args)
+	{
+		var dialog = (EditContactDialog)o;
+		if (args.ResponseId.Equals(ResponseType.Ok)) {
+			UpdateContact(dialog.GetContact());
+		}
+		dialog.Hide();
+		
+	}
 	
-	private Contact GetSelectedContact() {
-		ContactTreeNode selectedNode = (ContactTreeNode) this.contactTable.NodeSelection.SelectedNode;
-		return selectedNode.Contact;
+	private ContactTreeNode GetSelectedContactNode() {
+		return (ContactTreeNode) this.contactTable.NodeSelection.SelectedNode;
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
