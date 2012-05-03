@@ -24,6 +24,12 @@ namespace AddressBookDemoCSharp
 	[Gtk.TreeNode (ListOnly=true)]
 	public class ContactTreeNode : TreeNode
 	{
+		public const int NAME_COLUMN_INDEX = 0;
+		
+		public const int PHONE_COLUMN_INDEX = 1;
+		
+		public const int EMAIL_COLUMN_INDEX = 2;
+		
 		private Contact contact;
 		
 		public ContactTreeNode(Contact contact)
@@ -41,13 +47,13 @@ namespace AddressBookDemoCSharp
 			}
 		}
 		
-		[Gtk.TreeNodeValue (Column=0)]
+		[Gtk.TreeNodeValue (Column=NAME_COLUMN_INDEX)]
         public string Name {get { return this.contact.Name; } }
 		
-		[Gtk.TreeNodeValue (Column=1)]
+		[Gtk.TreeNodeValue (Column=PHONE_COLUMN_INDEX)]
         public string Phone {get { return this.contact.Phone; } }
 		
-		[Gtk.TreeNodeValue (Column=2)]
+		[Gtk.TreeNodeValue (Column=EMAIL_COLUMN_INDEX)]
         public string Email {get { return this.contact.Email; } }
 	}
 }

@@ -32,9 +32,9 @@ public class MainWindow: Gtk.Window
 	{
 		this.contactService = contactService;
 		this.contactTable = new NodeView(GetContactNodeStore());
-        contactTable.AppendColumn("Name", new CellRendererText(), "text", 0);
-        contactTable.AppendColumn("Phone", new CellRendererText(), "text", 1);
-        contactTable.AppendColumn("Email", new CellRendererText(), "text", 2);
+        contactTable.AppendColumn("Name", new CellRendererText(), "text", ContactTreeNode.NAME_COLUMN_INDEX);
+        contactTable.AppendColumn("Phone", new CellRendererText(), "text", ContactTreeNode.PHONE_COLUMN_INDEX);
+        contactTable.AppendColumn("Email", new CellRendererText(), "text", ContactTreeNode.EMAIL_COLUMN_INDEX);
 		this.SetSizeRequest(400, 300);
 		var vbox = new VBox();
 		vbox.PackStart(this.contactTable, true, true, 0);
