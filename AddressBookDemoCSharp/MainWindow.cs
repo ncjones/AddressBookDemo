@@ -35,6 +35,9 @@ public class MainWindow: Gtk.Window
         contactTable.AppendColumn("Name", new CellRendererText(), "text", ContactTreeNode.NAME_COLUMN_INDEX);
         contactTable.AppendColumn("Phone", new CellRendererText(), "text", ContactTreeNode.PHONE_COLUMN_INDEX);
         contactTable.AppendColumn("Email", new CellRendererText(), "text", ContactTreeNode.EMAIL_COLUMN_INDEX);
+		contactTable.RowActivated += delegate (object o, RowActivatedArgs args) {
+			this.ShowEditDialog();
+		};
 		this.SetSizeRequest(400, 300);
 		var vbox = new VBox();
 		vbox.PackStart(this.contactTable, true, true, 0);
@@ -52,14 +55,19 @@ public class MainWindow: Gtk.Window
 		}
 		return store;
 	}
+
+	void ShowEditDialog()
+	{
+		var dialog = new EditContactDialog(this.GetSelectedContactNode().Contact);
+		dialog.Response += HandleDialogResponse;
+		dialog.Show();
+	}
 	
 	private Container createActionButtonsContainer() {
 		var box = new HBox(false, 0);
 		var editButton = new Button("Edit Contact");
 		editButton.Clicked += delegate(object sender, EventArgs e) {
-			var dialog = new EditContactDialog(this.GetSelectedContactNode().Contact);
-			dialog.Response += HandleDialogResponse;
-			dialog.Show();
+			ShowEditDialog ();
 		};
 		box.PackEnd(editButton, false, false, 0);
 		return box;
