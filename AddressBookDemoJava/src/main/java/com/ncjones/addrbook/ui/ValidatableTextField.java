@@ -20,7 +20,6 @@ package com.ncjones.addrbook.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -30,20 +29,17 @@ public class ValidatableTextField extends JTextField implements DocumentListener
 
 	private static final long serialVersionUID = 1L;
 
-	private final Pattern regex;
-
-	private final boolean nullable;
-
 	private final List<ValueChangeListener<String>> valueChangeListeners = new ArrayList<ValueChangeListener<String>>();
 
-	public ValidatableTextField(final String regex, final boolean nullable) {
+	private final Validator<String> validator;
+
+	public ValidatableTextField(final Validator<String> validator) {
 		this.getDocument().addDocumentListener(this);
-		this.regex = Pattern.compile(regex);
-		this.nullable = nullable;
+		this.validator = validator;
 	}
 
 	public boolean isValueValid() {
-		return this.nullable && this.getText().isEmpty() || this.regex.matcher(this.getText()).matches();
+		return this.validator.validate(this.getText()).isValid();
 	}
 
 	@Override

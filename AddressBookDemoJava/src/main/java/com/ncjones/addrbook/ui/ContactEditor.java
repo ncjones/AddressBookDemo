@@ -43,17 +43,17 @@ public class ContactEditor extends EditorComponent<Contact> implements ValueChan
 
 	private void initComponentUi() {
 		final JComponent panel = this;
-		this.nameField = new ValidatableTextField(".+", false);
+		this.nameField = new ValidatableTextField(new RegexStringValidator(".+", "Name is required.", "Name is invalid."));
 		this.nameField.setColumns(22);
 		this.nameField.addValueChangeListener(this);
 		final JLabel nameLabel = new JLabel("Name");
 		nameLabel.setLabelFor(this.nameField);
-		this.emailField = new ValidatableTextField(".+@.+", false);
+		this.emailField = new ValidatableTextField(new RegexStringValidator(".+@.+", "Email is required.", "Email is invalid."));
 		this.emailField.setColumns(22);
 		this.emailField.addValueChangeListener(this);
 		final JLabel emailLabel = new JLabel("Email");
 		emailLabel.setLabelFor(this.emailField);
-		this.phoneField = new ValidatableTextField("\\+?[0-9]([0-9]| )*", false);
+		this.phoneField = new ValidatableTextField(new RegexStringValidator("\\+?[0-9]([0-9]| )*", "Phone is required.", "Phone is invalid."));
 		this.phoneField.setColumns(22);
 		this.phoneField.addValueChangeListener(this);
 		final JLabel phoneLabel = new JLabel("Phone");
