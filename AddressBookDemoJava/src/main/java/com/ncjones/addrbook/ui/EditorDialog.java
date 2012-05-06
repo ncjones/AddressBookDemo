@@ -33,7 +33,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class EditorDialog<T> extends JDialog implements ValueChangeListener<T> {
+public class EditorDialog<T> extends JDialog implements ValidationStateChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,14 +68,14 @@ public class EditorDialog<T> extends JDialog implements ValueChangeListener<T> {
 			}
 
 		});
-		this.editorComponent.addValueChangeListener(this);
+		this.editorComponent.addValidationStateChangeListener(this);
 	}
 
 	protected Component createButtonPanel() {
 		final JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		this.okButton = new JButton("Ok");
-		this.okButton.setEnabled(this.editorComponent.isValueValid());
+		this.okButton.setEnabled(this.editorComponent.getValidationState().isValid());
 		this.okButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
@@ -118,8 +118,8 @@ public class EditorDialog<T> extends JDialog implements ValueChangeListener<T> {
 	}
 
 	@Override
-	public void valueChanged(final T value) {
-		this.okButton.setEnabled(this.editorComponent.isValueValid());
+	public void validationStateChanged(final Validatable validatable) {
+		this.okButton.setEnabled(this.editorComponent.getValidationState().isValid());
 	}
 
 }

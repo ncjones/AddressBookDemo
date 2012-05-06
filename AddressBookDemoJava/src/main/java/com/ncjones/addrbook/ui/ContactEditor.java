@@ -99,15 +99,22 @@ public class ContactEditor extends EditorComponent<Contact> implements Validatio
 	}
 
 	@Override
-	public boolean isValueValid() {
-		return this.nameField.getValidationState().isValid()
-				&& this.emailField.getValidationState().isValid()
-				&& this.phoneField.getValidationState().isValid();
+	public ValidationState getValidationState() {
+		if (!this.nameField.getValidationState().isValid()) {
+			return this.nameField.getValidationState();
+		}
+		if (!this.emailField.getValidationState().isValid()) {
+			return this.emailField.getValidationState();
+		}
+		if (!this.phoneField.getValidationState().isValid()) {
+			return this.phoneField.getValidationState();
+		}
+		return new ValidationState(true, "");
 	}
 
 	@Override
 	public Contact getValue() {
-		if (!this.isValueValid()) {
+		if (!this.getValidationState().isValid()) {
 			return null;
 		}
 		final String name = this.nameField.getText();
@@ -118,7 +125,7 @@ public class ContactEditor extends EditorComponent<Contact> implements Validatio
 
 	@Override
 	public void validationStateChanged(final Validatable validatable) {
-		this.fireValueChanged();
+		this.fireValidationStateChanged();
 	}
 
 }

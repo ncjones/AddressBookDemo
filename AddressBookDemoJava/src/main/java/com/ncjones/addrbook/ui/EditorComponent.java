@@ -23,25 +23,29 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
-public abstract class EditorComponent<T> extends JComponent {
+public abstract class EditorComponent<T> extends JComponent implements Validatable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final List<ValueChangeListener<T>> valueChangeListeners = new ArrayList<ValueChangeListener<T>>();
+	private final List<ValidationStateChangeListener> validationStateChangeListeners = new ArrayList<ValidationStateChangeListener>();
 
 	public abstract T getValue();
 
 	public abstract void setValue(T contact);
 
-	public abstract boolean isValueValid();
-
-	public void addValueChangeListener(final ValueChangeListener<T> listener) {
-		this.valueChangeListeners.add(listener);
+	@Override
+	public void addValidationStateChangeListener(final ValidationStateChangeListener listener) {
+		this.validationStateChangeListeners.add(listener);
 	}
 
-	protected void fireValueChanged() {
-		for (final ValueChangeListener<T> listener : this.valueChangeListeners) {
-			listener.valueChanged(this.getValue());
+	@Override
+	public void removeValidationStateChangeListener(final ValidationStateChangeListener listener) {
+		this.validationStateChangeListeners.remove(listener);
+	}
+
+	protected void fireValidationStateChanged() {
+		for (final ValidationStateChangeListener listener : this.validationStateChangeListeners) {
+			listener.validationStateChanged(this);
 		}
 	}
 
