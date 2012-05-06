@@ -63,12 +63,24 @@ public class ContactEditor extends EditorComponent<Contact> implements ValueChan
 		groupLayout.setAutoCreateGaps(true);
 		groupLayout.setAutoCreateContainerGaps(true);
 		groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(nameLabel).addComponent(emailLabel).addComponent(phoneLabel))
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(this.nameField).addComponent(this.emailField).addComponent(this.phoneField)));
+				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(nameLabel)
+						.addComponent(emailLabel)
+						.addComponent(phoneLabel))
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(this.nameField)
+						.addComponent(this.emailField)
+						.addComponent(this.phoneField)));
 		groupLayout.setVerticalGroup(groupLayout.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.CENTER, false).addComponent(nameLabel).addComponent(this.nameField))
-				.addGroup(groupLayout.createParallelGroup(Alignment.CENTER, false).addComponent(emailLabel).addComponent(this.emailField))
-				.addGroup(groupLayout.createParallelGroup(Alignment.CENTER, false).addComponent(phoneLabel).addComponent(this.phoneField)));
+				.addGroup(groupLayout.createParallelGroup(Alignment.CENTER, false)
+						.addComponent(nameLabel)
+						.addComponent(this.nameField))
+				.addGroup(groupLayout.createParallelGroup(Alignment.CENTER, false)
+						.addComponent(emailLabel)
+						.addComponent(this.emailField))
+				.addGroup(groupLayout.createParallelGroup(Alignment.CENTER, false)
+						.addComponent(phoneLabel)
+						.addComponent(this.phoneField)));
 	}
 
 	@Override
