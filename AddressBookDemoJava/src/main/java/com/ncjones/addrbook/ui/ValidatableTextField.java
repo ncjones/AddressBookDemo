@@ -18,6 +18,8 @@
  */
 package com.ncjones.addrbook.ui;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +39,12 @@ public class ValidatableTextField extends JTextField implements Validatable {
 
 	public ValidatableTextField(final Validator<String> validator) {
 		this.getDocument().addDocumentListener(new ValidatableTextFieldDocumentListener());
+		this.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(final FocusEvent e) {
+				ValidatableTextField.this.valueChanged();
+			}
+		});
 		this.validator = validator;
 	}
 
