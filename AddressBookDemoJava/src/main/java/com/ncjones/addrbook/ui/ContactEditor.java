@@ -48,7 +48,7 @@ public class ContactEditor extends EditorComponent<Contact> implements Validatio
 		this.nameField.addValidationStateChangeListener(this);
 		final JLabel nameLabel = new JLabel("Name");
 		nameLabel.setLabelFor(this.nameField);
-		this.emailField = new ValidatableTextField(new RegexStringValidator(".+@.+", "Email is required.", "Email is invalid."));
+		this.emailField = new ValidatableTextField(new RegexStringValidator("[^@]+@[^@]+\\.[^@]+", "Email is required.", "Email is invalid."));
 		this.emailField.setColumns(22);
 		this.emailField.addValidationStateChangeListener(this);
 		final JLabel emailLabel = new JLabel("Email");
