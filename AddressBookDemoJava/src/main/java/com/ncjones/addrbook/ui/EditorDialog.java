@@ -19,7 +19,9 @@
 package com.ncjones.addrbook.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,8 +30,10 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -45,6 +49,8 @@ public class EditorDialog<T> extends JDialog implements ValidationStateChangeLis
 
 	private JButton okButton;
 
+	private final JLabel validationMessageLabel = new JLabel("");
+
 	public EditorDialog(final EditorComponent<T> editorComponent) {
 		this.editorComponent = editorComponent;
 		this.init();
@@ -53,6 +59,10 @@ public class EditorDialog<T> extends JDialog implements ValidationStateChangeLis
 	protected void init() {
 		this.setLayout(new BorderLayout());
 		this.add(this.getEditorComponent());
+		this.add(this.validationMessageLabel, BorderLayout.NORTH);
+		this.validationMessageLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+		this.validationMessageLabel.setPreferredSize(new Dimension(30, 30));
+		this.validationMessageLabel.setForeground(Color.RED);
 		this.add(this.createButtonPanel(), BorderLayout.SOUTH);
 		this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		this.setModal(true);
@@ -119,7 +129,9 @@ public class EditorDialog<T> extends JDialog implements ValidationStateChangeLis
 
 	@Override
 	public void validationStateChanged(final Validatable validatable) {
-		this.okButton.setEnabled(this.editorComponent.getValidationState().isValid());
+		final ValidationState validationState = this.editorComponent.getValidationState();
+		this.okButton.setEnabled(validationState.isValid());
+		this.validationMessageLabel.setText(validationState.getMessage());
 	}
 
 }
