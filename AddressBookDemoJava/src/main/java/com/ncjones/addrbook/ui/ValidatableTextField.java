@@ -25,7 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class ValidatableTextField extends JTextField implements DocumentListener {
+public class ValidatableTextField extends JTextField {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,7 +34,7 @@ public class ValidatableTextField extends JTextField implements DocumentListener
 	private final Validator<String> validator;
 
 	public ValidatableTextField(final Validator<String> validator) {
-		this.getDocument().addDocumentListener(this);
+		this.getDocument().addDocumentListener(new ValidatableTextFieldDocumentListener());
 		this.validator = validator;
 	}
 
@@ -42,19 +42,23 @@ public class ValidatableTextField extends JTextField implements DocumentListener
 		return this.validator.validate(this.getText()).isValid();
 	}
 
-	@Override
-	public void insertUpdate(final DocumentEvent e) {
-		this.fireValueChanged();
-	}
+	private class ValidatableTextFieldDocumentListener implements DocumentListener {
 
-	@Override
-	public void removeUpdate(final DocumentEvent e) {
-		this.fireValueChanged();
-	}
+		@Override
+		public void insertUpdate(final DocumentEvent e) {
+			ValidatableTextField.this.fireValueChanged();
+		}
 
-	@Override
-	public void changedUpdate(final DocumentEvent e) {
-		this.fireValueChanged();
+		@Override
+		public void removeUpdate(final DocumentEvent e) {
+			ValidatableTextField.this.fireValueChanged();
+		}
+
+		@Override
+		public void changedUpdate(final DocumentEvent e) {
+			ValidatableTextField.this.fireValueChanged();
+		}
+
 	}
 
 	private void fireValueChanged() {
