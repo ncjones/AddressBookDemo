@@ -25,50 +25,67 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class ValidatableTextField extends JTextField {
+public class ValidatableTextField extends JTextField implements Validatable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final List<ValueChangeListener<String>> valueChangeListeners = new ArrayList<ValueChangeListener<String>>();
+	private final List<ValidationStateChangeListener> validationStateChangeListeners = new ArrayList<ValidationStateChangeListener>();
 
 	private final Validator<String> validator;
+
+	private ValidationState validationState = new ValidationState(false, "");
 
 	public ValidatableTextField(final Validator<String> validator) {
 		this.getDocument().addDocumentListener(new ValidatableTextFieldDocumentListener());
 		this.validator = validator;
 	}
 
-	public boolean isValueValid() {
-		return this.validator.validate(this.getText()).isValid();
-	}
-
 	private class ValidatableTextFieldDocumentListener implements DocumentListener {
 
 		@Override
 		public void insertUpdate(final DocumentEvent e) {
-			ValidatableTextField.this.fireValueChanged();
+			ValidatableTextField.this.valueChanged();
 		}
 
 		@Override
 		public void removeUpdate(final DocumentEvent e) {
-			ValidatableTextField.this.fireValueChanged();
+			ValidatableTextField.this.valueChanged();
 		}
 
 		@Override
 		public void changedUpdate(final DocumentEvent e) {
-			ValidatableTextField.this.fireValueChanged();
+			ValidatableTextField.this.valueChanged();
 		}
 
 	}
 
-	private void fireValueChanged() {
-		for (final ValueChangeListener<String> listener : this.valueChangeListeners) {
-			listener.valueChanged(this.getText());
+	private void valueChanged() {
+		final ValidationState newValidationState = this.validator.validate(this.getText());
+		if (!newValidationState.equals(this.validationState)) {
+			this.validationState = newValidationState;
+			this.fireValidationStateChanged();
 		}
 	}
 
-	public void addValueChangeListener(final ValueChangeListener<String> listener) {
-		this.valueChangeListeners.add(listener);
+	private void fireValidationStateChanged() {
+		for (final ValidationStateChangeListener listener : this.validationStateChangeListeners) {
+			listener.validationStateChanged(this);
+		}
+	}
+
+	@Override
+	public ValidationState getValidationState() {
+		return this.validationState;
+	}
+
+	@Override
+	public void addValidationStateChangeListener(final ValidationStateChangeListener listener) {
+		this.validationStateChangeListeners.add(listener);
+	}
+
+	@Override
+	public void removeValidationStateChangeListener(final ValidationStateChangeListener listener) {
+		this.validationStateChangeListeners.remove(listener);
 	}
 
 }

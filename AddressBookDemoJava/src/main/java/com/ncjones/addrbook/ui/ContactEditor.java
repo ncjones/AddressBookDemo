@@ -25,7 +25,7 @@ import javax.swing.JLabel;
 
 import com.ncjones.addrbook.core.Contact;
 
-public class ContactEditor extends EditorComponent<Contact> implements ValueChangeListener<String> {
+public class ContactEditor extends EditorComponent<Contact> implements ValidationStateChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -45,17 +45,17 @@ public class ContactEditor extends EditorComponent<Contact> implements ValueChan
 		final JComponent panel = this;
 		this.nameField = new ValidatableTextField(new RegexStringValidator(".+", "Name is required.", "Name is invalid."));
 		this.nameField.setColumns(22);
-		this.nameField.addValueChangeListener(this);
+		this.nameField.addValidationStateChangeListener(this);
 		final JLabel nameLabel = new JLabel("Name");
 		nameLabel.setLabelFor(this.nameField);
 		this.emailField = new ValidatableTextField(new RegexStringValidator(".+@.+", "Email is required.", "Email is invalid."));
 		this.emailField.setColumns(22);
-		this.emailField.addValueChangeListener(this);
+		this.emailField.addValidationStateChangeListener(this);
 		final JLabel emailLabel = new JLabel("Email");
 		emailLabel.setLabelFor(this.emailField);
 		this.phoneField = new ValidatableTextField(new RegexStringValidator("\\+?[0-9]([0-9]| )*", "Phone is required.", "Phone is invalid."));
 		this.phoneField.setColumns(22);
-		this.phoneField.addValueChangeListener(this);
+		this.phoneField.addValidationStateChangeListener(this);
 		final JLabel phoneLabel = new JLabel("Phone");
 		phoneLabel.setLabelFor(this.phoneField);
 		final GroupLayout groupLayout = new GroupLayout(panel);
@@ -100,7 +100,9 @@ public class ContactEditor extends EditorComponent<Contact> implements ValueChan
 
 	@Override
 	public boolean isValueValid() {
-		return this.nameField.isValueValid() && this.emailField.isValueValid() && this.phoneField.isValueValid();
+		return this.nameField.getValidationState().isValid()
+				&& this.emailField.getValidationState().isValid()
+				&& this.phoneField.getValidationState().isValid();
 	}
 
 	@Override
@@ -115,7 +117,7 @@ public class ContactEditor extends EditorComponent<Contact> implements ValueChan
 	}
 
 	@Override
-	public void valueChanged(final String value) {
+	public void validationStateChanged(final Validatable validatable) {
 		this.fireValueChanged();
 	}
 
