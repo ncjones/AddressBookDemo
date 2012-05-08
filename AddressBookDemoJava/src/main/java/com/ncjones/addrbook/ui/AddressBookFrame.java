@@ -20,12 +20,8 @@ package com.ncjones.addrbook.ui;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
@@ -51,10 +47,6 @@ public class AddressBookFrame extends JFrame {
 
 	private JTable contactsTable;
 
-	private final EditContactDialog addContactDialog = new EditContactDialog("Add Contact");
-
-	private final EditContactDialog editContactDialog = new EditContactDialog("Edit Contact");
-
 	private final AddContactAction addContactAction = new AddContactAction();
 
 	private final EditContactAction editContactAction = new EditContactAction();
@@ -75,36 +67,6 @@ public class AddressBookFrame extends JFrame {
 		final JPanel buttonPanel = this.createButtonPanel();
 		this.add(buttonPanel);
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		this.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(final WindowEvent e) {
-				AddressBookFrame.this.addContactDialog.dispose();
-				AddressBookFrame.this.editContactDialog.dispose();
-			}
-		});
-		this.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentShown(final ComponentEvent e) {
-				AddressBookFrame.this.addContactDialog.setLocationRelativeTo(AddressBookFrame.this);
-				AddressBookFrame.this.editContactDialog.setLocationRelativeTo(AddressBookFrame.this);
-			}
-		});
-		this.editContactDialog.addCloseListener(new EditorDialogCloseListener<Contact>() {
-			@Override
-			public void editorClosed(final Contact dialogValue, final boolean editConfirmed) {
-				if (editConfirmed) {
-					AddressBookFrame.this.updateContact(dialogValue);
-				}
-			}
-		});
-		this.addContactDialog.addCloseListener(new EditorDialogCloseListener<Contact>() {
-			@Override
-			public void editorClosed(final Contact dialogValue, final boolean editConfirmed) {
-				if (editConfirmed) {
-					AddressBookFrame.this.addContact(dialogValue);
-				}
-			}
-		});
 		this.pack();
 	}
 
@@ -142,8 +104,18 @@ public class AddressBookFrame extends JFrame {
 	}
 
 	protected void showEditContactDialog() {
-		this.editContactDialog.setValue(this.getSelectedContact());
-		this.editContactDialog.showDialog();
+		final EditContactDialog editContactDialog = new EditContactDialog("Edit Contact");
+		editContactDialog.addCloseListener(new EditorDialogCloseListener<Contact>() {
+			@Override
+			public void editorClosed(final Contact dialogValue, final boolean editConfirmed) {
+				if (editConfirmed) {
+					AddressBookFrame.this.updateContact(dialogValue);
+				}
+			}
+		});
+		editContactDialog.setLocationRelativeTo(this);
+		editContactDialog.setValue(this.getSelectedContact());
+		editContactDialog.showDialog();
 	}
 
 	private void updateContact(final Contact contact) {
@@ -159,8 +131,18 @@ public class AddressBookFrame extends JFrame {
 	}
 
 	private void showAddContactDialog() {
-		this.addContactDialog.setValue(null);
-		this.addContactDialog.showDialog();
+		final EditContactDialog addContactDialog = new EditContactDialog("Add Contact");
+		addContactDialog.addCloseListener(new EditorDialogCloseListener<Contact>() {
+			@Override
+			public void editorClosed(final Contact dialogValue, final boolean editConfirmed) {
+				if (editConfirmed) {
+					AddressBookFrame.this.addContact(dialogValue);
+				}
+			}
+		});
+		addContactDialog.setLocationRelativeTo(this);
+		addContactDialog.setValue(null);
+		addContactDialog.showDialog();
 	}
 
 	private void addContact(final Contact contact) {
