@@ -52,6 +52,7 @@
     <Compile Include="InMemoryContactService.cs" />
     <Compile Include="EditContactDialog.cs" />
     <Compile Include="ContactTreeNode.cs" />
+    <Compile Include="ContactEditor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
