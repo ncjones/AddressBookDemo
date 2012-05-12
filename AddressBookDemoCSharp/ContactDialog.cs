@@ -16,15 +16,33 @@
 //  You should have received a copy of the GNU General Public License
 //  along with AddressBookDemo.  If not, see <http://www.gnu.org/licenses/>.
 // 
+using System;
 using Gtk;
 
 namespace AddressBookDemoCSharp
 {
-	class EditContactDialog : ContactDialog
+	public abstract class ContactDialog : Dialog
 	{
-		public EditContactDialog(Contact contact) : base("Edit Contact", contact)
+		ContactEditor contactEditor;
+
+		public ContactDialog(string title, Contact contact)
 		{
+			this.Title = title;
+			this.contactEditor = new ContactEditor(contact);
+			this.InitDialogUI();
+		}
+		
+		public Contact GetContact() {
+			return this.contactEditor.GetContact();
+		}
+
+		void InitDialogUI()
+		{
+			this.VBox.PackStart(this.contactEditor, false, false, 0);
+			this.ShowAll();
+			this.AddButton(Stock.Ok, ResponseType.Ok);
+			this.AddButton(Stock.Cancel, ResponseType.Cancel);
 		}
 	}
-
 }
+
