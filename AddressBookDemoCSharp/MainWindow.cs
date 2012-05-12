@@ -31,13 +31,7 @@ public class MainWindow: Gtk.Window
 	public MainWindow (ContactService contactService): base (Gtk.WindowType.Toplevel)
 	{
 		this.contactService = contactService;
-		this.contactTable = new NodeView(GetContactNodeStore());
-        contactTable.AppendColumn("Name", new CellRendererText(), "text", ContactTreeNode.NAME_COLUMN_INDEX);
-        contactTable.AppendColumn("Phone", new CellRendererText(), "text", ContactTreeNode.PHONE_COLUMN_INDEX);
-        contactTable.AppendColumn("Email", new CellRendererText(), "text", ContactTreeNode.EMAIL_COLUMN_INDEX);
-		contactTable.RowActivated += delegate (object o, RowActivatedArgs args) {
-			this.ShowEditDialog();
-		};
+		this.contactTable = CreateTable();
 		this.SetSizeRequest(400, 300);
 		var vbox = new VBox();
 		vbox.PackStart(this.contactTable, true, true, 0);
@@ -47,8 +41,20 @@ public class MainWindow: Gtk.Window
 		this.Name = "MainWindow";
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 	}
+
+	private NodeView CreateTable ()
+	{
+		NodeView contactTable = new NodeView(CreateContactNodeStore());
+		contactTable.AppendColumn("Name", new CellRendererText(), "text", ContactTreeNode.NAME_COLUMN_INDEX);
+		contactTable.AppendColumn("Phone", new CellRendererText(), "text", ContactTreeNode.PHONE_COLUMN_INDEX);
+		contactTable.AppendColumn("Email", new CellRendererText(), "text", ContactTreeNode.EMAIL_COLUMN_INDEX);
+		contactTable.RowActivated += delegate (object o, RowActivatedArgs args) {
+			this.ShowEditDialog();
+		};
+		return contactTable;
+	}
 	
-	private NodeStore GetContactNodeStore() {
+	private NodeStore CreateContactNodeStore() {
 		var store = new Gtk.NodeStore(typeof(ContactTreeNode));
 		foreach (var contact in this.contactService.getAllContacts()) {
 			store.AddNode(new ContactTreeNode(contact));
