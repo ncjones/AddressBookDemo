@@ -21,6 +21,8 @@ using Gtk;
 using AddressBookDemoCSharp;
 using System.Collections.Generic;
 using GLib;
+	
+delegate void ContactHandler(Contact contact);
 
 public class MainWindow: Gtk.Window
 {
@@ -49,7 +51,7 @@ public class MainWindow: Gtk.Window
 		contactTable.AppendColumn("Phone", new CellRendererText(), "text", ContactTreeNode.PHONE_COLUMN_INDEX);
 		contactTable.AppendColumn("Email", new CellRendererText(), "text", ContactTreeNode.EMAIL_COLUMN_INDEX);
 		contactTable.RowActivated += delegate (object o, RowActivatedArgs args) {
-			this.ShowEditDialog();
+			this.ShowEditContactDialog();
 		};
 		return contactTable;
 	}
@@ -62,21 +64,39 @@ public class MainWindow: Gtk.Window
 		return store;
 	}
 
-	void ShowEditDialog()
+	void ShowNewContactDialog()
+	{
+		var dialog = new NewContactDialog();
+		dialog.Response += NewContactDialogResponseHandler;
+		dialog.Show();
+	}
+
+	void ShowEditContactDialog()
 	{
 		var dialog = new EditContactDialog(this.GetSelectedContactNode().Contact);
-		dialog.Response += HandleDialogResponse;
+		dialog.Response += EditContactDialogResponseHandler;
 		dialog.Show();
 	}
 	
 	private Container createActionButtonsContainer() {
 		var box = new HBox(false, 0);
-		var editButton = new Button("Edit Contact");
-		editButton.Clicked += delegate(object sender, EventArgs e) {
-			ShowEditDialog ();
+		var editContactButton = new Button("Edit Contact");
+		editContactButton.Clicked += delegate(object sender, EventArgs e) {
+			ShowEditContactDialog ();
 		};
-		box.PackEnd(editButton, false, false, 0);
+		box.PackEnd(editContactButton, false, false, 0);
+		var newContactButton = new Button("Add Contact");
+		newContactButton.Clicked += delegate(object sender, EventArgs e) {
+			ShowNewContactDialog ();
+		};
+		box.PackEnd(newContactButton, false, false, 0);
 		return box;
+	}
+
+	void SaveContact(Contact contact)
+	{
+		this.contactService.saveContact(contact);
+		this.contactTable.NodeStore.AddNode(new ContactTreeNode(contact));
 	}
 
 	void UpdateContact(Contact contact)
@@ -85,14 +105,23 @@ public class MainWindow: Gtk.Window
 		this.GetSelectedContactNode().Contact = contact;
 	}
 
-	void HandleDialogResponse(object o, ResponseArgs args)
+	void NewContactDialogResponseHandler(object o, ResponseArgs args)
 	{
-		var dialog = (EditContactDialog)o;
+		ContactDialogResponseHandler(o, args, SaveContact);
+	}
+
+	void EditContactDialogResponseHandler(object o, ResponseArgs args)
+	{
+		ContactDialogResponseHandler(o, args, UpdateContact);
+	}
+
+	void ContactDialogResponseHandler(object o, ResponseArgs args, ContactHandler contactHandler)
+	{
+		var dialog = (ContactDialog)o;
 		if (args.ResponseId.Equals(ResponseType.Ok)) {
-			UpdateContact(dialog.GetContact());
+			contactHandler(dialog.GetContact());
 		}
 		dialog.Hide();
-		
 	}
 	
 	private ContactTreeNode GetSelectedContactNode() {

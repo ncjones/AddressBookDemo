@@ -54,6 +54,7 @@
     <Compile Include="ContactTreeNode.cs" />
     <Compile Include="ContactEditor.cs" />
     <Compile Include="ContactDialog.cs" />
+    <Compile Include="NewContactDialog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
