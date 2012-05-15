@@ -77,9 +77,22 @@ public class MainWindow: Gtk.Window
 		dialog.Response += EditContactDialogResponseHandler;
 		dialog.Show();
 	}
+
+	void ShowDeleteContactDialog()
+	{
+		var selectedContact = this.GetSelectedContactNode().Contact;
+		var confirmDialog = new MessageDialog(this, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo, "Delete contact \"{0}\"?", selectedContact.Name);
+		confirmDialog.Title = "Confirm Delete";
+		confirmDialog.Show();
+	}
 	
 	private Container createActionButtonsContainer() {
 		var box = new HBox(false, 0);
+		var deleteContactButton = new Button("Delete Contact");
+		deleteContactButton.Clicked += delegate(object sender, EventArgs e) {
+			ShowDeleteContactDialog();
+		};
+		box.PackEnd(deleteContactButton, false, false, 0);
 		var editContactButton = new Button("Edit Contact");
 		editContactButton.Clicked += delegate(object sender, EventArgs e) {
 			ShowEditContactDialog ();
