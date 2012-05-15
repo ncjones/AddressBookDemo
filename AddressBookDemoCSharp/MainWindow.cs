@@ -41,7 +41,7 @@ public class MainWindow: Gtk.Window
 		this.Add(vbox);
 		this.ShowAll();
 		this.Name = "MainWindow";
-		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.HandleWindowDeleted);
 	}
 
 	private NodeView CreateTable ()
@@ -128,7 +128,7 @@ public class MainWindow: Gtk.Window
 		return (ContactTreeNode) this.contactTable.NodeSelection.SelectedNode;
 	}
 	
-	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
+	private void HandleWindowDeleted(object sender, DeleteEventArgs a)
 	{
 		Application.Quit ();
 		a.RetVal = true;
