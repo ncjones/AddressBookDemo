@@ -83,6 +83,12 @@ public class MainWindow: Gtk.Window
 		var selectedContact = this.GetSelectedContactNode().Contact;
 		var confirmDialog = new MessageDialog(this, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo, "Delete contact \"{0}\"?", selectedContact.Name);
 		confirmDialog.Title = "Confirm Delete";
+		confirmDialog.Response += delegate(object o, ResponseArgs args) {
+			if (args.ResponseId == ResponseType.Yes) {
+				this.DeleteSelectedContact();
+			}
+			confirmDialog.Destroy();
+		};
 		confirmDialog.Show();
 	}
 	
@@ -116,6 +122,13 @@ public class MainWindow: Gtk.Window
 	{
 		this.contactService.updateContact(contact);
 		this.GetSelectedContactNode().Contact = contact;
+	}
+	
+	void DeleteSelectedContact()
+	{
+		var contactNode = this.GetSelectedContactNode();
+		this.contactService.deleteContact(contactNode.Contact.Id);
+		this.contactTable.NodeStore.RemoveNode(contactNode);
 	}
 
 	void NewContactDialogResponseHandler(object o, ResponseArgs args)
