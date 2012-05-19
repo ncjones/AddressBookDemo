@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ItemType>ValaProject</ItemType>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A8F8EC61-6B5D-4F0A-8177-10D0D0AB8A85}</ProjectGuid>
+    <compiler>
+      <compiler />
+    </compiler>
+    <Packages>
+      <Packages>
+        <ProjectPackage file="/usr/share/vala-0.14/vapi//glib-2.0.vapi" name="glib-2.0" IsProject="false" />
+      </Packages>
+    </Packages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug</OutputPath>
+    <CodeGeneration>
+      <CodeGeneration WarningLevel="Normal" WarningsAsErrors="false" OptimizationLevel="0" ExtraCompilerArguments="" DefineSymbols="DEBUG MONODEVELOP" EnableMultithreading="false" ctype="ValaCompilationParameters" />
+    </CodeGeneration>
+    <SourceDirectory>.</SourceDirectory>
+    <Output>
+      <Output output="AddressBookDemoVala" />
+    </Output>
+    <Build>
+      <Build target="Bin" />
+    </Build>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release</OutputPath>
+    <CodeGeneration>
+      <CodeGeneration WarningLevel="Normal" WarningsAsErrors="false" OptimizationLevel="3" ExtraCompilerArguments="" DefineSymbols="MONODEVELOP" EnableMultithreading="false" ctype="ValaCompilationParameters" />
+    </CodeGeneration>
+    <SourceDirectory>.</SourceDirectory>
+    <Output>
+      <Output output="AddressBookDemoVala" />
+    </Output>
+    <Build>
+      <Build target="Bin" />
+    </Build>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ContactService.vala" />
+    <Compile Include="Main.vala" />
+    <Compile Include="Contact.vala" />
+    <Compile Include="InMemoryContactService.vala" />
+  </ItemGroup>
+</Project>
