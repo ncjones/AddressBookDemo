@@ -12,7 +12,8 @@
     </compiler>
     <Packages>
       <Packages>
-        <ProjectPackage file="/usr/share/vala-0.14/vapi//glib-2.0.vapi" name="glib-2.0" IsProject="false" />
+        <ProjectPackage file="/usr/share/vala-0.14/vapi/glib-2.0.vapi" name="glib-2.0" IsProject="false" />
+        <ProjectPackage file="/usr/share/vala-0.14/vapi/gtk+-2.0.vapi" name="gtk+-2.0" IsProject="false" />
       </Packages>
     </Packages>
   </PropertyGroup>
