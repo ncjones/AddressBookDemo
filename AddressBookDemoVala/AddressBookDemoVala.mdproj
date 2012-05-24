@@ -49,5 +49,8 @@
     <Compile Include="Main.vala" />
     <Compile Include="Contact.vala" />
     <Compile Include="InMemoryContactService.vala" />
+    <Compile Include="TableModel.vala" />
+    <Compile Include="TableColumn.vala" />
+    <Compile Include="TableView.vala" />
   </ItemGroup>
 </Project>
