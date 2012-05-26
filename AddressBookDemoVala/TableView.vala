@@ -25,11 +25,13 @@ namespace AddressBookDemo {
 		
 		public TableView(TableModel<T> model) {
 			var columnIndex = 0;
+			Type[] columnTypes = new Type[model.get_columns().length];
 			foreach (var column in model.get_columns()) {
 				this.insert_column_with_attributes(-1, column.get_title(), new CellRendererText(), "text", columnIndex);
+				columnTypes[columnIndex] = typeof(string);
 				columnIndex += 1;
 			}
-			var listStore = new Gtk.ListStore(model.get_columns().length, typeof(T));
+			ListStore listStore = new ListStore.newv(columnTypes);
 			foreach (T o in model.get_row_data()) {
 				TreeIter iter;
 				listStore.append(out iter);

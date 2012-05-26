@@ -52,5 +52,6 @@
     <Compile Include="TableModel.vala" />
     <Compile Include="TableColumn.vala" />
     <Compile Include="TableView.vala" />
+    <Compile Include="ContactTableModel.vala" />
   </ItemGroup>
 </Project>
