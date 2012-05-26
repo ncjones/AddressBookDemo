@@ -29,7 +29,8 @@ namespace AddressBookDemo {
 			this.contactService = contactService;
 			this.columns = new TableColumn<Contact>[] {
 				new ContactNameColumn(),
-				new ContactPhoneColumn()
+				new ContactPhoneColumn(),
+				new ContactEmailColumn()
 			};
 		}
 		
@@ -62,6 +63,18 @@ namespace AddressBookDemo {
 		
 		public string get_value(Contact contact) {
 			return contact.Phone;
+		}
+		
+	}
+	
+	private class ContactEmailColumn : GLib.Object, TableColumn<Contact> {
+		
+		public string get_title() {
+			return "Email Address";
+		}
+		
+		public string get_value(Contact contact) {
+			return contact.Email;
 		}
 		
 	}
