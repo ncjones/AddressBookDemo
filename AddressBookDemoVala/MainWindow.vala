@@ -23,11 +23,25 @@ namespace AddressBookDemo {
 	
 	public class MainWindow : Window {
 		
+		private TableView<Contact> contactsTable;
+		
 		public MainWindow(ContactService contactService) {
 			this.title = "Address Book";
 			var tableModel = new ContactTableModel(contactService);
-			var tableView = new TableView<Contact>(tableModel);
-			this.add(tableView);
+			this.contactsTable = new TableView<Contact>(tableModel);
+			this.add(contactsTable);
+			contactsTable.row_activated.connect((o, args) => {
+				this.ShowEditContactDialog();
+			});
+		}
+	
+		private Contact getSelectedContact() {
+			return this.contactsTable.getSelectedObject();
+		}
+
+		void ShowEditContactDialog() {
+			var dialog = new EditContactDialog(this.getSelectedContact());
+			dialog.show();
 		}
 	}
 }
