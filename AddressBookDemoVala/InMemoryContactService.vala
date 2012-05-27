@@ -26,10 +26,12 @@ namespace AddressBookDemo {
 			contact1.Name = "Test One";
 			contact1.Phone = "12345";
 			contact1.Email = "test1@example.com";
+			contact1.Id = 1;
 			Contact contact2 = new Contact();
 			contact2.Name = "Test Two";
 			contact2.Phone = "53421";
 			contact2.Email = "test2@example.com";
+			contact2.Id = 2;
 			Contact[] contacts = new Contact[]{
 				contact1,
 				contact2
