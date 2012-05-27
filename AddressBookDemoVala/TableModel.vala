@@ -19,11 +19,15 @@
 
 namespace AddressBookDemo {
 
-	public interface TableModel<T> {
+	public interface TableModel<T> : GLib.Object {
 		
 		public abstract T[] get_row_data();
 		
 		public abstract TableColumn<T>[] get_columns();
+		
+		public abstract T get_object(string objectId);
+		
+		public abstract string get_object_id(T object);
 		
 	}
 

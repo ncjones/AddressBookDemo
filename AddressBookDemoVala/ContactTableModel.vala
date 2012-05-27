@@ -19,7 +19,7 @@
 
 namespace AddressBookDemo {
 	
-	public class ContactTableModel : TableModel<Contact> {
+	public class ContactTableModel : GLib.Object, TableModel<Contact> {
 		
 		private ContactService contactService;
 		
@@ -40,6 +40,19 @@ namespace AddressBookDemo {
 		
 		public TableColumn<Contact>[] get_columns(){
 			return this.columns;
+		}
+		
+		public Contact get_object(string objectId) {
+			foreach (var contact in this.get_row_data()) {
+				if (contact.Id == int.parse(objectId)) {
+					return contact;
+				}
+			}
+			return null;
+		}
+		
+		public string get_object_id(Contact contact) {
+			return contact.Id.to_string();
 		}
 	}
 	
