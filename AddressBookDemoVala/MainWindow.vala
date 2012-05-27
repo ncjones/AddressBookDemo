@@ -17,18 +17,17 @@
 // along with AddressBookDemo.  If not, see <http://www.gnu.org/licenses/>.
 // 
 
-using AddressBookDemo;
 using Gtk;
 
-public class AddressBookDemoMain : GLib.Object {
+namespace AddressBookDemo {
 	
-	public static int main (string[] args) {
-		Gtk.init(ref args);
-		var window = new MainWindow(new InMemoryContactService());
-		window.destroy.connect(Gtk.main_quit);
-		window.show_all();
-		Gtk.main();
-		return 0;
+	public class MainWindow : Window {
+		
+		public MainWindow(ContactService contactService) {
+			this.title = "Address Book";
+			var tableModel = new ContactTableModel(contactService);
+			var tableView = new TableView<Contact>(tableModel);
+			this.add(tableView);
+		}
 	}
-
 }
