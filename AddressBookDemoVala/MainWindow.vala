@@ -51,6 +51,9 @@ namespace AddressBookDemo {
 
 		void ShowEditContactDialog() {
 			var dialog = new EditContactDialog(this.getSelectedContact());
+			dialog.response.connect((responseId) => {
+				dialog.destroy();
+			});
 			dialog.show();
 		}
 	}

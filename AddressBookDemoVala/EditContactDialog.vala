@@ -37,6 +37,7 @@ namespace AddressBookDemo {
 			this.vbox.pack_start(createField(this.nameEntry, "Name", contact.Name), false, true, 0);
 			this.vbox.pack_start(createField(this.phoneEntry, "Phone", contact.Phone), false, true, 0);
 			this.vbox.pack_start(createField(this.emailEntry, "Email", contact.Email), false, true, 0);
+			this.add_button(Stock.OK, ResponseType.OK);
 			this.show_all();
 		}
 		
