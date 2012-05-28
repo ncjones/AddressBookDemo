@@ -29,10 +29,20 @@ namespace AddressBookDemo {
 			this.title = "Address Book";
 			var tableModel = new ContactTableModel(contactService);
 			this.contactsTable = new TableView<Contact>(tableModel);
-			this.add(contactsTable);
-			contactsTable.row_activated.connect((o, args) => {
-				this.ShowEditContactDialog();
-			});
+			var vbox = new VBox(false, 0);
+			vbox.add(contactsTable);
+			vbox.add(createButtonBox());
+			this.add(vbox);
+			contactsTable.row_activated.connect(this.ShowEditContactDialog);
+		}
+		
+		private ButtonBox createButtonBox() {
+			ButtonBox buttonBox = new HButtonBox();
+			buttonBox.set_layout(ButtonBoxStyle.END);
+			var editButton = new Button.with_label("Edit Contact");
+			editButton.clicked.connect(this.ShowEditContactDialog);
+			buttonBox.pack_end(editButton);
+			return buttonBox;
 		}
 	
 		private Contact getSelectedContact() {
