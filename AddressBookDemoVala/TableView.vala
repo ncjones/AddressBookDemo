@@ -27,26 +27,54 @@ namespace AddressBookDemo {
 		
 		public TableView(TableModel<T> model) {
 			this.tableModel = model;
-			var columnIndex = 1;
-			Type[] columnTypes = new Type[model.get_columns().length + 1];
+			this.set_model(new ListStore.newv(getColumnTypes()));
+			this.insertColumns();
+			this.appendRows();
+		}
+		
+		private Type[] getColumnTypes() {
+			Type[] columnTypes = new Type[this.tableModel.get_columns().length + 1];
 			columnTypes[0] = typeof(string);
-			foreach (var column in model.get_columns()) {
-				this.insert_column_with_attributes(-1, column.get_title(), new CellRendererText(), "text", columnIndex);
+			var columnIndex = 1;
+			foreach (var column in this.tableModel.get_columns()) {
 				columnTypes[columnIndex] = typeof(string);
 				columnIndex += 1;
 			}
-			ListStore listStore = new ListStore.newv(columnTypes);
-			foreach (T o in model.get_row_data()) {
-				TreeIter iter;
-				listStore.append(out iter);
-				listStore.set_value(iter, 0, model.get_object_id(o));
-				columnIndex = 1;
-				foreach (var column in model.get_columns()) {
-					listStore.set_value(iter, columnIndex, column.get_value(o));
-					columnIndex += 1;
-				}
+			return columnTypes;
+		}
+		
+		private void insertColumns() {
+			var columnIndex = 1;
+			foreach (var column in this.tableModel.get_columns()) {
+				this.insert_column_with_attributes(-1, column.get_title(), new CellRendererText(), "text", columnIndex);
+				columnIndex += 1;
 			}
-			this.set_model(listStore);
+		}
+		
+		private ListStore getListStore() {
+			return ((ListStore)this.get_model());
+		}
+		
+		private void appendRows() {
+			foreach (T o in this.tableModel.get_row_data()) {
+				this.appendRow(o);
+			}
+		}
+		
+		private void appendRow(T o) {
+			TreeIter iter;
+			this.getListStore().append(out iter);
+			updateRow(iter, o);
+		}
+		
+		private void updateRow(TreeIter iter, T o) {
+			var listStore = getListStore();
+			listStore.set_value(iter, 0, this.tableModel.get_object_id(o));
+			var columnIndex = 1;
+			foreach (var column in this.tableModel.get_columns()) {
+				listStore.set_value(iter, columnIndex, column.get_value(o));
+				columnIndex += 1;
+			}
 		}
 		
 		public T? getSelectedObject() {
