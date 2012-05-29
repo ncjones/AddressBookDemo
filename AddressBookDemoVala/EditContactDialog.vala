@@ -23,6 +23,8 @@ namespace AddressBookDemo {
 	
 	public class EditContactDialog : Gtk.Dialog {
 		
+		private int contactId;
+		
 		private Entry nameEntry;
 		
 		private Entry phoneEntry;
@@ -31,6 +33,7 @@ namespace AddressBookDemo {
 		
 		public EditContactDialog(Contact contact) {
 			this.title = "Edit Contact";
+			this.contactId = contact.Id;
 			this.nameEntry = new Entry();
 			this.phoneEntry = new Entry();
 			this.emailEntry = new Entry();
@@ -47,6 +50,15 @@ namespace AddressBookDemo {
 			hbox.pack_start(new Label(fieldName), false, true, 0);
 			hbox.pack_start(entry, false, true, 0);
 			return hbox;
+		}
+		
+		public Contact getContact() {
+			var contact = new Contact();
+			contact.Id = this.contactId;
+			contact.Name = this.nameEntry.text;
+			contact.Phone = this.phoneEntry.get_text();
+			contact.Email = this.emailEntry.get_text();
+			return contact;
 		}
 	}
 }

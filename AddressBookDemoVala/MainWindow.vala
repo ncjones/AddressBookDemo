@@ -23,12 +23,17 @@ namespace AddressBookDemo {
 	
 	public class MainWindow : Window {
 		
+		private ContactService contactService;
+		
 		private TableView<Contact> contactsTable;
 		
+		private ContactTableModel contactTableModel;
+		
 		public MainWindow(ContactService contactService) {
+			this.contactService = contactService;
 			this.title = "Address Book";
-			var tableModel = new ContactTableModel(contactService);
-			this.contactsTable = new TableView<Contact>(tableModel);
+			this.contactTableModel = new ContactTableModel(contactService);
+			this.contactsTable = new TableView<Contact>(this.contactTableModel);
 			var vbox = new VBox(false, 0);
 			vbox.add(contactsTable);
 			vbox.add(createButtonBox());
@@ -52,7 +57,12 @@ namespace AddressBookDemo {
 		void ShowEditContactDialog() {
 			var dialog = new EditContactDialog(this.getSelectedContact());
 			dialog.response.connect((responseId) => {
+				var contact = dialog.getContact();
 				dialog.destroy();
+				if (responseId == ResponseType.OK) {
+					this.contactsTable.replaceSelectedObject(contact);
+					this.contactService.SaveContact(contact);
+				}
 			});
 			dialog.show();
 		}

@@ -67,7 +67,7 @@ namespace AddressBookDemo {
 			updateRow(iter, o);
 		}
 		
-		private void updateRow(TreeIter iter, T o) {
+		public void updateRow(TreeIter iter, T o) {
 			var listStore = getListStore();
 			listStore.set_value(iter, 0, this.tableModel.get_object_id(o));
 			var columnIndex = 1;
@@ -77,12 +77,20 @@ namespace AddressBookDemo {
 			}
 		}
 		
-		public T? getSelectedObject() {
+		private TreeIter getSelectedIter() {
 			TreeIter iter;
 			this.get_selection().get_selected(null, out iter);
+			return iter;
+		}
+		
+		public T? getSelectedObject() {
 			string selectedObjectId;
-			this.get_model().get(iter, 0, out selectedObjectId, -1);
+			this.get_model().get(getSelectedIter(), 0, out selectedObjectId, -1);
 			return this.tableModel.get_object(selectedObjectId);
+		}
+		
+		public void replaceSelectedObject(T o) {
+			this.updateRow(this.getSelectedIter(), o);
 		}
 		
 	}
