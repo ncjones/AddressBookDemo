@@ -43,12 +43,7 @@ namespace AddressBookDemo {
 		}
 		
 		public Contact get_object(string objectId) {
-			foreach (var contact in this.get_row_data()) {
-				if (contact.Id == int.parse(objectId)) {
-					return contact;
-				}
-			}
-			return null;
+			return this.contactService.GetContact(int.parse(objectId));
 		}
 		
 		public string get_object_id(Contact contact) {

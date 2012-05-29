@@ -21,6 +21,8 @@ namespace AddressBookDemo {
 	
 	public interface ContactService : Object {
 		
+		public abstract Contact GetContact(int id);
+		
 		public abstract Contact[] GetAllContacts();
 		
 		public abstract void SaveContact(Contact contact);

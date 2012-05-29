@@ -25,6 +25,10 @@ namespace AddressBookDemo {
 		
 		private Map<int, Contact> contacts = new HashMap<int, Contact>();
 		
+		public Contact GetContact(int id) {
+			return contacts.get(id);
+		}
+		
 		public Contact[] GetAllContacts() {
 			return contacts.values.to_array();
 		}
