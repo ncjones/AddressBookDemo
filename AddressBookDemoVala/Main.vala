@@ -24,11 +24,27 @@ public class AddressBookDemoMain : GLib.Object {
 	
 	public static int main (string[] args) {
 		Gtk.init(ref args);
-		var window = new MainWindow(new InMemoryContactService());
+		var window = new MainWindow(GetContactService());
 		window.destroy.connect(Gtk.main_quit);
 		window.show_all();
 		Gtk.main();
 		return 0;
+	}
+	
+	public static ContactService GetContactService() {
+		var contactService = new InMemoryContactService();
+		contactService.SaveContact(createContact(1, "Test One", "12345", "test1@example.com"));
+		contactService.SaveContact(createContact(2, "Test Two", "53421", "test2@example.com"));
+		return contactService;
+	}
+	
+	private static Contact createContact(int id, string name, string phone, string email) {
+		Contact contact = new Contact();
+		contact.Id = id;
+		contact.Name = name;
+		contact.Phone = phone;
+		contact.Email = email;
+		return contact;
 	}
 
 }

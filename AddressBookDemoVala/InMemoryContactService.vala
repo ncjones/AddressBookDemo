@@ -17,26 +17,20 @@
 // along with AddressBookDemo.  If not, see <http://www.gnu.org/licenses/>.
 // 
 
+using Gee;
+
 namespace AddressBookDemo {
 	
 	public class InMemoryContactService : Object, ContactService {
 		
+		private Map<int, Contact> contacts = new HashMap<int, Contact>();
+		
 		public Contact[] GetAllContacts() {
-			Contact contact1 = new Contact();
-			contact1.Name = "Test One";
-			contact1.Phone = "12345";
-			contact1.Email = "test1@example.com";
-			contact1.Id = 1;
-			Contact contact2 = new Contact();
-			contact2.Name = "Test Two";
-			contact2.Phone = "53421";
-			contact2.Email = "test2@example.com";
-			contact2.Id = 2;
-			Contact[] contacts = new Contact[]{
-				contact1,
-				contact2
-			};
-			return contacts;
+			return contacts.values.to_array();
+		}
+		
+		public void SaveContact(Contact contact) {
+			this.contacts.set(contact.Id, contact);
 		}
 	}
 }
