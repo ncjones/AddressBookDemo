@@ -3,6 +3,8 @@
 /AddressBookDemoCSharp/*.userprefs
 /AddressBookDemoCSharp/*.pidb
 /AddressBookDemoCSharp/obj
+/AddressBookDemoVala/build
+/AddressBookDemoVala/.lock-waf*
 /AddressBookDemoVala/bin
 /AddressBookDemoVala/*.userprefs
 /AddressBookDemoVala/*.pidb
