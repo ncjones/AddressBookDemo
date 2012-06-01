@@ -8,3 +8,5 @@
 /AddressBookDemoVala/bin
 /AddressBookDemoVala/*.userprefs
 /AddressBookDemoVala/*.pidb
+/AddressBookDemoScala/build
+/AddressBookDemoScala/.cache
